@@ -25,7 +25,7 @@ namespace IndieheadsTopTenTuesdaySpotifyBot.UI.Services
 
         public async Task UpdatePlaylistAsync(string accessToken, string playlistId)
         {
-            var spreadsheetSongs = ReadResultsFromExcelFile(_spotifyConfig.Value);
+            var spreadsheetSongs = ReadResultsFromExcelFile(_spotifyConfig.Value.SpreadsheetLocation);
             _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
 
             var playlist = await GetPlaylistSongsAsync(playlistId);
