@@ -25,7 +25,7 @@ namespace IndieheadsTopTenTuesdaySpotifyBot.UI.Services
 
         public async Task UpdatePlaylistAsync(string accessToken, string playlistId)
         {
-            var spreadsheetSongs = ReadResultsFromExcelFile(_spotifyConfig.Value.LogFileLocation);
+            var spreadsheetSongs = ReadResultsFromExcelFile(_spotifyConfig.Value);
             _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
 
             var playlist = await GetPlaylistSongsAsync(playlistId);
@@ -37,7 +37,7 @@ namespace IndieheadsTopTenTuesdaySpotifyBot.UI.Services
                     if (uri != null) // TODO we need to search the song again with the returned song info
                         await AddSongToPlaylistAsync(playlistId, uri);
                     else
-                        using (StreamWriter writer = new StreamWriter("problemSongs.txt", true))
+                        using (StreamWriter writer = new StreamWriter(_spotifyConfig.Value.LogFileLocation, true))
                         {
                             writer.WriteLine($"Artist: {spreadsheetSong.Artist}, Title: {spreadsheetSong.Song}, Album: {spreadsheetSong.Album}");
                         }

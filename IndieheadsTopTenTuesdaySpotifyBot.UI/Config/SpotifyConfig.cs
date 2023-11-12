@@ -9,5 +9,6 @@
         public string TokenUrl { get; set; }
         public string PlaylistId { get; set; }
         public string LogFileLocation { get; set; }
+        public string SpreadsheetLocation { get; set; }
     }
 }
