@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndieheadsTopTenTuesdaySpotifyBot.UI", "IndieheadsTopTenTuesdaySpotifyBot.UI\IndieheadsTopTenTuesdaySpotifyBot.UI.csproj", "{69D8D87B-ED0F-4564-90C5-70E57C5B45DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69D8D87B-ED0F-4564-90C5-70E57C5B45DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D8D87B-ED0F-4564-90C5-70E57C5B45DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D8D87B-ED0F-4564-90C5-70E57C5B45DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D8D87B-ED0F-4564-90C5-70E57C5B45DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9928CFF-D977-474B-A82C-B12C2CD60704}
+	EndGlobalSection
+EndGlobal

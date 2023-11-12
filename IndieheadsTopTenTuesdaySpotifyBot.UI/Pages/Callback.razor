@@ -1,0 +1,61 @@
+﻿@page "/callback"
+@using System.Text.Json
+@using IndieheadsTopTenTuesdaySpotifyBot.UI.Config
+@using IndieheadsTopTenTuesdaySpotifyBot.UI.Services
+@using Microsoft.Extensions.Options
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject ISpotifyService _spotifyService;
+@inject IOptions<SpotifyConfig> _spotifyConfig;
+<img src="work.gif" alt="Loading..." />
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
+
+        if (query.TryGetValue("code", out var code))
+        {
+            await ExchangeCodeForToken(code);
+
+        }
+    }
+
+    private async Task ExchangeCodeForToken(string code)
+    {
+        var requestMessage = new HttpRequestMessage(HttpMethod.Post, _spotifyConfig.Value.TokenUrl)
+        {
+            Content = new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                ["grant_type"] = "authorization_code",
+                ["code"] = code,
+                ["redirect_uri"] = _spotifyConfig.Value.RedirectUri,
+                ["client_id"] = _spotifyConfig.Value.ClientId,
+                ["client_secret"] = _spotifyConfig.Value.ClientSecret
+            })
+        };
+
+        var response = await Http.SendAsync(requestMessage);
+        var responseContent = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+        {
+            var tokens = JsonSerializer.Deserialize<SpotifyTokens>(responseContent);
+            await _spotifyService.UpdatePlaylistAsync(tokens.access_token, _spotifyConfig.Value.PlaylistId);
+        }
+        else
+        {
+            // Handle error
+        }
+    }
+
+    private class SpotifyTokens
+    {
+        public string access_token { get; set; }
+        public string refresh_token { get; set; }
+        public string token_type { get; set; }
+        public int expires_in { get; set; }
+        public string scope { get; set; }
+    }
+}

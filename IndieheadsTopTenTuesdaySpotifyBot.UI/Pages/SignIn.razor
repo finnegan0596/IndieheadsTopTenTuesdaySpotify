@@ -1,0 +1,18 @@
+﻿@inject NavigationManager NavigationManager;
+@inject IOptions<SpotifyConfig> _spotifyConfig
+
+@page "/signin"
+@using IndieheadsTopTenTuesdaySpotifyBot.UI.Config
+@using Microsoft.Extensions.Options
+<button @onclick="BeginSpotifyAuthentication">Update playlist</button>
+
+@code {
+    private void BeginSpotifyAuthentication()
+    {
+        var scope = "user-read-private user-read-email playlist-modify-public playlist-modify-private";
+        var state = "your_unique_state_value"; // Should be a unique, unguessable value
+
+        var url = $"{_spotifyConfig.Value.AuthUrl}?response_type=code&client_id={_spotifyConfig.Value.ClientId}&scope={Uri.EscapeDataString(scope)}&redirect_uri={Uri.EscapeDataString(_spotifyConfig.Value.RedirectUri)}&state={state}";
+        NavigationManager.NavigateTo(url, true);
+    }
+}
